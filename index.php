@@ -52,7 +52,7 @@ try {
     //// Botan.io integration
     //$telegram->enableBotan('your_token');
 
-//$result = Request::sendMessage(['chat_id' => $chat_id, 'text' => 'Your utf8 text 😜 ...']);
+$result = Request::sendMessage(['chat_id' => $chat_id, 'text' => 'Your utf8 text 😜 ...']);
  
     // Handle telegram webhook request
     $telegram->handle();
