@@ -54,7 +54,7 @@ try {
 
     // Handle telegram webhook request
     $telegram->handle();
-	$result = Request::sendMessage(['chat_id' => $chat_id, 'text' => 'Your utf8 text 😜 ...']);
+	
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // Silence is gold!
     // echo $e;
