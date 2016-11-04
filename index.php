@@ -21,7 +21,7 @@ $BOT_NAME = 'ibnSinaBot';
 try {
     // Create Telegram API object
     $telegram = new Longman\TelegramBot\Telegram($API_KEY, $BOT_NAME);
-
+Request::sendChatAction(['chat_id' => $chat_id, 'action' => 'typing']);
     //// Enable MySQL
     //$telegram->enableMySQL($mysql_credentials);
 
