@@ -20,49 +20,25 @@ $BOT_NAME = 'ibnSinaBot';
 //    'database' => 'dbname',
 //];
 
-try {
     // Create Telegram API object
-    $telegram = new Longman\TelegramBot\Telegram($API_KEY, $BOT_NAME);
-Request::sendChatAction(['chat_id' => $chat_id, 'action' => 'typing']);
-    //// Enable MySQL
-    //$telegram->enableMySQL($mysql_credentials);
 
-    //// Enable MySQL with table prefix
-    //$telegram->enableMySQL($mysql_credentials, $BOT_NAME . '_');
+$telegram = new Telegram($API_KEY, $BOT_NAME);
 
-    //// Add an additional commands path
-    //$telegram->addCommandsPath($commands_path);
+// Get the chat id and message text from the CLI parameters.
+$chat_id = isset($argv[1]) ? $argv[1] : '';
+$message = isset($argv[2]) ? $argv[2] : '';
 
-    //// Here you can enable admin interface for the channel you want to manage
-    //$telegram->enableAdmins(['your_telegram_id']);
-    //$telegram->setCommandConfig('sendtochannel', ['your_channel' => '@type_here_your_channel']);
+if ($chat_id !== '' && $message !== '') {
+    $data = [
+        'chat_id' => $chat_id,
+        'text'    => $message,
+    ];
 
-    //// Here you can set some command specific parameters,
-    //// for example, google geocode/timezone api key for date command:
-    //$telegram->setCommandConfig('date', ['google_api_key' => 'your_google_api_key_here']);
+    $result = Request::sendMessage($data);
 
-    //// Logging
-    //\Longman\TelegramBot\TelegramLog::initialize($your_external_monolog_instance);
-    //\Longman\TelegramBot\TelegramLog::initErrorLog($path . '/' . $BOT_NAME . '_error.log');
-    //\Longman\TelegramBot\TelegramLog::initDebugLog($path . '/' . $BOT_NAME . '_debug.log');
-    //\Longman\TelegramBot\TelegramLog::initUpdateLog($path . '/' . $BOT_NAME . '_update.log');
-
-    //// Set custom Upload and Download path
-    //$telegram->setDownloadPath('../Download');
-    //$telegram->setUploadPath('../Upload');
-
-    //// Botan.io integration
-    //$telegram->enableBotan('your_token');
-
-//$result = Request::sendMessage(['chat_id' => $chat_id, 'text' => 'Your utf8 text 😜 ...']);
- 
-	
-} catch (Longman\TelegramBot\Exception\TelegramException $e) {
-    // Silence is gold!
-    // echo $e;
-    // log telegram errors
-    \Longman\TelegramBot\TelegramLog::error($e);
-} catch (Longman\TelegramBot\Exception\TelegramLogException $e) {
-    // Silence is gold! Uncomment this to catch log initilization errors
-    //echo $e;
+    if ($result->isOk()) {
+        echo 'Message sent succesfully to: ' . $chat_id;
+    } else {
+        echo 'Sorry message not sent to: ' . $chat_id;
+    }
 }
