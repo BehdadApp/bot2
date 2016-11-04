@@ -23,22 +23,8 @@ $BOT_NAME = 'ibnSinaBot';
     // Create Telegram API object
 
 $telegram = new Telegram($API_KEY, $BOT_NAME);
-
-// Get the chat id and message text from the CLI parameters.
-$chat_id = isset($argv[1]) ? $argv[1] : '';
-$message = isset($argv[2]) ? $argv[2] : '';
-
-if ($chat_id !== '' && $message !== '') {
-    $data = [
-        'chat_id' => $chat_id,
-        'text'    => $message,
-    ];
-
-    $result = Request::sendMessage($data);
-
-    if ($result->isOk()) {
-        echo 'Message sent succesfully to: ' . $chat_id;
-    } else {
-        echo 'Sorry message not sent to: ' . $chat_id;
-    }
-}
+$response = $telegram->sendMessage([
+  'chat_id' => 'CHAT_ID', 
+  'text' => 'Hello World'
+]);
+ 
